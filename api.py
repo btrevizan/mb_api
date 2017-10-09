@@ -3,7 +3,7 @@
 
 import json
 import requests
-from labels import Url, Method
+from labels import Url, Method, Coin
 
 
 class Request():
@@ -17,7 +17,7 @@ class Request():
     See method.__doc__ for method's description.
     """
 
-    def __init__(self, coin):
+    def __init__(self, coin=Coin.BTC):
         """Get value from Coin Enum's object."""
         self.__api = Url.API.value  # base API url
         self.__coin = coin.value    # coin label
