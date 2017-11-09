@@ -258,7 +258,7 @@ class Trade():
                                 data=self.__params,
                                 headers=self.__header())
 
-        data = request.content.decode('latin-1')
+        data = request.content.decode('utf-8')
         data = json.loads(data)
 
         request.close()

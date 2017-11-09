@@ -19,7 +19,7 @@ class Coin(Enum):
     """Each coin represents its value for API params."""
 
     BRL = 'BRL'
-    BTC = 'BTC'
+    BTC = 'BRLBTC'
     LTC = 'BRLLTC'
     BCH = 'BRLBCH'
 
