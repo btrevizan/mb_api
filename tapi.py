@@ -140,6 +140,9 @@ class Trade():
 
             to_timestamp -- get orders UP TO some timestamp
         """
+        if 'status_list' in kwargs:
+            kwargs['status_list'] = json.dumps(kwargs['status_list'])
+
         kwargs['coin_pair'] = self.__coin
         self.__params = params(Method.ORDERS.value, **kwargs)
 
@@ -153,6 +156,7 @@ class Trade():
                 True: 500 bids, 500 asks
                 False: 20 bids, 20 asks
         """
+        kwargs['coin_pair'] = self.__coin
         self.__params = params(Method.LIST_ORDERBOOK.value, **kwargs)
 
         return self.__execute()
@@ -168,6 +172,7 @@ class Trade():
         where 0.5 is the quantity and 2500 is the limit.
         """
         self.__params = params(Method.BUY.value,
+                               coin_pair=self.__coin,
                                quantity=quantity,
                                limit_price=limit)
 
@@ -184,6 +189,7 @@ class Trade():
         where 0.5 is the quantity and 2500 is the limit.
         """
         self.__params = params(Method.SELL.value,
+                               coin_pair=self.__coin,
                                quantity=quantity,
                                limit_price=limit)
 
@@ -195,7 +201,9 @@ class Trade():
         Keyword arguments:
             order_id -- order's id to be cancelled
         """
-        self.__params = params(Method.CANCEL.value, order_id=order_id)
+        self.__params = params(Method.CANCEL.value,
+                               coin_pair=self.__coin,
+                               order_id=order_id)
 
         return self.__execute()
 
@@ -228,6 +236,9 @@ class Trade():
                 BCH: BCash
 
             description(optional) -- withdrawal description
+
+        To know more abotu additional parameters, see:
+        https://www.mercadobitcoin.com.br/trade-api/#withdraw_coin
         """
         kwargs['coin'] = coin
         self.__params = params(Method.WITHDRAW.value, **kwargs)
