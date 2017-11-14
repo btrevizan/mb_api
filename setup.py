@@ -9,6 +9,6 @@ setup(
     author='Bernardo Trevizan',
     author_email='trevizanbernardo@gmail.com',
     url='https://github.com/btrevizan/mb_api',
-    download_url='https://github.com/btrevizan/mb_api/dist/mbapi-0.1.tar.gz',
+    download_url='https://github.com/btrevizan/mb_api/dist/mbapi-0.1.2.tar.gz',
     keywords='bitcoin,api,mercado_bitcoin'
 )
