@@ -13,7 +13,7 @@ import json
 import time
 
 from random import randint
-from labels import Coin, Url, Method
+from .labels import Coin, Url, Method
 
 
 class Auth():
