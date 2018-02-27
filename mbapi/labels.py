@@ -19,9 +19,13 @@ class Coin(Enum):
     """Each coin represents its value for API params."""
 
     BRL = 'BRL'
-    BTC = 'BRLBTC'
-    LTC = 'BRLLTC'
-    BCH = 'BRLBCH'
+    BTC = 'BTC'
+    LTC = 'LTC'
+    BCH = 'BCH'
+
+    BRLBTC = BRL + BTC
+    BRLLTC = BRL + LTC
+    BRLBCH = BRL + BCH
 
 
 class Method(Enum):

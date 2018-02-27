@@ -82,12 +82,12 @@ class Trade():
     See method.__doc__ for method's description.
     """
 
-    def __init__(self, auth, coin=Coin.BTC):
+    def __init__(self, auth, coin=Coin.BRLBTC):
         """Set auth properties and coin type.
 
         Keyword argument:
             auth -- an Auth object
-            coin -- coin type (Default Coin.BTC)
+            coin -- coin type (Default Coin.BRLBTC)
         """
         self.__id = auth.id()
         self.__pin = auth.pin()
