@@ -3,7 +3,7 @@
 
 import json
 import requests
-from labels import Url, Method, Coin
+from .labels import Url, Method, Coin
 
 
 class Request():
