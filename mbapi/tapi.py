@@ -94,7 +94,7 @@ class Trade():
         self.__secret = auth.secret()
 
         self.__coin = coin.value
-        self.__nonce = 0
+        self.__nonce = int(time.time())
 
     @property
     def nonce(self):
