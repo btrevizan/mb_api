@@ -288,7 +288,7 @@ def params(method, **kwargs):
     parameters = kwargs
 
     # Random (but incremental) number for request.
-    nonce = str(int(time.time()) - randint(1, 29))
+    nonce = str(int(time.time()))
 
     # Dict with params fulfill.
     parameters['tapi_nonce'] = nonce
