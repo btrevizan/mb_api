@@ -94,6 +94,12 @@ class Trade():
         self.__secret = auth.secret()
 
         self.__coin = coin.value
+        self.__nonce = 0
+
+    @property
+    def nonce(self):
+        self.__nonce += 1
+        return self.__nonce
 
     def list_system_messages(self, **kwargs):
         """Get the list of warnings, infos and error messages.
@@ -101,12 +107,12 @@ class Trade():
         Keyword arguments:
             level -- could be 'INFO', 'WARNING' or 'ERROR' (optional)
         """
-        self.__params = params(Method.SYS_MSG.value, **kwargs)
+        self.__params = params(Method.SYS_MSG.value, self.nonce, **kwargs)
         return self.__execute()
 
     def get_account_info(self):
         """Get user's account balance and withdrawal limits."""
-        self.__params = params(Method.ACCOUNT_INFO.value)
+        self.__params = params(Method.ACCOUNT_INFO.value, self.nonce)
         return self.__execute()
 
     def get_order(self, order_id):
@@ -116,6 +122,7 @@ class Trade():
             order_id -- order id
         """
         self.__params = params(Method.GET_ORDER.value,
+                               self.nonce,
                                coin_pair=self.__coin,
                                order_id=order_id)
 
@@ -144,7 +151,7 @@ class Trade():
             kwargs['status_list'] = json.dumps(kwargs['status_list'])
 
         kwargs['coin_pair'] = self.__coin
-        self.__params = params(Method.ORDERS.value, **kwargs)
+        self.__params = params(Method.ORDERS.value, self.nonce, **kwargs)
 
         return self.__execute()
 
@@ -157,7 +164,7 @@ class Trade():
                 False: 20 bids, 20 asks
         """
         kwargs['coin_pair'] = self.__coin
-        self.__params = params(Method.LIST_ORDERBOOK.value, **kwargs)
+        self.__params = params(Method.LIST_ORDERBOOK.value, self.nonce, **kwargs)
 
         return self.__execute()
 
@@ -172,6 +179,7 @@ class Trade():
         where 0.5 is the quantity and 2500 is the limit.
         """
         self.__params = params(Method.BUY.value,
+                               self.nonce,
                                coin_pair=self.__coin,
                                quantity=quantity,
                                limit_price=limit)
@@ -189,6 +197,7 @@ class Trade():
         where 0.5 is the quantity and 2500 is the limit.
         """
         self.__params = params(Method.SELL.value,
+                               self.nonce,
                                coin_pair=self.__coin,
                                quantity=quantity,
                                limit_price=limit)
@@ -202,6 +211,7 @@ class Trade():
             order_id -- order's id to be cancelled
         """
         self.__params = params(Method.CANCEL.value,
+                               self.nonce,
                                coin_pair=self.__coin,
                                order_id=order_id)
 
@@ -220,6 +230,7 @@ class Trade():
             withdrawal_id -- withdrawal's id
         """
         self.__params = params(Method.WITHDRAWAL.value,
+                               self.nonce,
                                coin=coin,
                                withdrawal_id=withdrawal_id)
 
@@ -241,7 +252,7 @@ class Trade():
         https://www.mercadobitcoin.com.br/trade-api/#withdraw_coin
         """
         kwargs['coin'] = coin
-        self.__params = params(Method.WITHDRAW.value, **kwargs)
+        self.__params = params(Method.WITHDRAW.value, self.nonce, **kwargs)
 
         return self.__execute()
 
@@ -277,7 +288,7 @@ class Trade():
         return Response(data)
 
 
-def params(method, **kwargs):
+def params(method, nonce, **kwargs):
     """Represent a set of parameters for a Trade request.
 
     Keyword arguments:
@@ -288,7 +299,7 @@ def params(method, **kwargs):
     parameters = kwargs
 
     # Random (but incremental) number for request.
-    nonce = str(int(time.time()))
+    nonce = str(nonce)
 
     # Dict with params fulfill.
     parameters['tapi_nonce'] = nonce
